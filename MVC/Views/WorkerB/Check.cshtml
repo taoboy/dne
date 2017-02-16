@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>任务跟单系统</title>
+    <link rel="stylesheet" type="text/css" href="~/asset/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/asset/css/workerBCheck.css">
+</head>
+<body>
+    <header>
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="~/asset/img/user.jpg" />
+            </a>
+            <span></span>
+            <span></span>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">更换头像</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">修改个人信息</a></li>
+            </ul>
+            <a role="menuitem" tabindex="-1" href="~/" class="a-quit">注销</a>
+            <span class="h3" style="position: absolute;left: 50%;margin-left: -108px;top:00px;">任务管理系统</span>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#">审核任务</a></li>
+                    <li><a href="Distribute?uid=@ViewBag.uid">分配任务</a></li>
+                    <li><a href="List?uid=@ViewBag.uid">任务列表</a></li>
+                </ul>
+            </div>
+            <div class="col-md-10 main">
+                <div class="panel panel-primary Check">
+                    <div class="panel-heading text-center">审核任务</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>申请人</th>
+                                        <th>标题</th>
+                                        <th>内容</th>
+                                        <th>验收时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in (List<com.gdce_task.Model.T_Task>)ViewBag.list)
+                                    {
+                                        <tr data-id="@item.id">
+                                            <td>@item.statusIdEntity.descr</td>
+                                            <td>@item.title</td>
+                                            <td>@item.content</td>
+                                            <td><input class="Wdate form-control" type="text" onclick="WdatePicker()" onfocus="WdatePicker({minDate:'%y-%M-{%d+1}'})"></td>
+                                            <td><button class="btn btn-primary pass-task" type="button">通过</button></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/asset/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="~/asset/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/asset/js/WdatePicker.js"></script>
+    <script type="text/javascript" src="~/asset/js/workerBCheck.js"></script>
+    <!--表单验证-->
+    <script src="~/Lib/bootstrap-validator/dist/validator.js"></script>
+    <!--表单Ajax提交-->
+    <script src="~/Lib/wigets/jquery.form.js"></script>
+    <script>
+        $(function () {
+            $('.main').find('.pass-task').on('click', function () {
+                var time = $(this).parents('tr').find('input').val();
+                if (time == null || time == undefined || time == '') {
+                    alert("请选择验收时间");
+                } else {
+                    var id = $(this).parents('tr').attr('data-id');
+                    $this = $(this).parents('tr');
+                    $.ajax({
+                        url: 'doCheck?uid=@ViewBag.uid',
+                        type: 'post',
+                        data: {
+                            id: id,
+                            time: time
+                        },
+                        success: function (json) {
+                            if (json.success) {
+                                alert(json.message);
+                                $this.remove();
+                            } else {
+                                alert(json.message);
+                            }
+                        },
+                        error: function () {
+                            alert('出错了，请检查网络');
+                        }
+                    });
+                }
+            });
+            var tdlength = $('.main').find('.table-responsive').find('td').length;
+            if (tdlength == 0) {
+                $('.main').find('.table-responsive').find('thead').replaceWith($('<thead><tr><th style="text-align:center;">暂无内容</th></tr></thead>'));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "广邮院任务系统--登录结果";
+}
+
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+      <title></title>
+   </head>
+    <p>@ViewBag.msg</p>
+    <p>正自动跳转...</p>
+  <body>
+    <script>
+        window.onload = function () {
+            localStorage.setItem("name", "@ViewBag.name");
+            localStorage.setItem("role", "@ViewBag.role");
+            localStorage.setItem("roleid", "@ViewBag.roleid");
+            localStorage.setItem("uid","@ViewBag.uid");
+            localStorage.setItem("pass", "@ViewBag.pass");
+            var host = window.location.host;
+            setTimeout(function () {
+                window.location = "http://"+host+ "/@ViewBag.action?uid=@ViewBag.uid";
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

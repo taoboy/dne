@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model List<com.gdce_task.Model.T_Task>
+}
+
+
+@section ul{
+    <ul class="nav-stacked">
+        <li><a href="Distribute">分配任务</a></li>
+        <li><a href="List">任务列表</a></li>
+        <li><a href="~/Login/UserCenter">个人中心</a></li>
+    </ul>
+}
+
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 main">
+                <div class="panel panel-primary Distribute">
+                    <div class="panel-heading text-center main">分配任务</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="post" action="">
+
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+                                <label class="col-sm-2 control-label">未分派任务</label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control form-item form-select">
+                                        @foreach (var item in (List<com.gdce_task.Model.T_Task>)ViewBag.tasklist)
+                                        {
+                                            <option id="@item.id">@item.title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" style="z-index:999;">
+                                <div class="col-sm-1"></div>
+                                <label class="col-sm-2 control-label">开始时间</label>
+                                <div class="col-sm-6">
+                                    <input class="datepicker form-control starttime" required type="text" onclick="WdatePicker()" onfocus="WdatePicker({minDate:'%y-%M-{%d+1}'})">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+                                <label class="col-sm-2 control-label">结束时间</label>
+                                <div class="col-sm-6">
+                                    <input class="datepicker form-control endtime" required type="text" onclick="WdatePicker()" onfocus="WdatePicker({minDate:'%y-%M-{%d+1}'})">
+                                </div>
+                            </div>
+
+                            @foreach (var taskitem in (List<com.gdce_task.Model.T_Task>)ViewBag.tasklist)
+                            {
+                                <div class="form-horizontal form-content">
+                                    <fieldset disabled>
+                                        <div class="form-group">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2 control-label">任务内容</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="@taskitem.content">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-group form-item-inner">
+                                        <label class="col-sm-2 col-sm-offset-1 control-label">1、</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control select-user">
+                                                @foreach (var useritem in (List<com.gdce_task.Model.T_User>)ViewBag.userlist)
+                                                {
+                                                    <option data-uid="@useritem.id">@useritem.name</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <textarea class="form-control" rows="3" required placeholder="解决方案"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                            <div class="form-group pass-task">
+                                <div class="col-sm-offset-5 col-sm-6">
+                                    <button type="submit" class="btn btn-default ">确定</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/asset/js/workerBDistribute.js"></script>
+    <script>
+        $(function () {
+            if ($('.main').find('option').length == 0) {
+                $('.main').find('.panel-body').replaceWith($('<div class="panel-body text-center">暂无可分配任务</div>'));
+            } else {
+                $('.main').find('.btn-default').on('click', function (e) {
+                    e.preventDefault();
+                    var title = $('.main').find('.form-select').val();
+                    var flag = true;
+                    var index = $('.main').find('.form-item-inner').length - 1;
+                    var starttime = $('.main').find('.starttime').val();
+                    var endtime = $('.main').find('.endtime').val();
+                    
+                    var user = $('.select-user');
+                    if (user.length > 1) {
+                        var userArr = new Array(user.eq(0).val());
+                        user.each(function (index, el) {
+                            if (index > 0) {
+                                if (flag) {
+                                    var l = userArr.length;
+                                    for (var i = 0; i < l; i++) {
+                                        if (userArr[i] == $(el).val()) {
+                                            flag = false;
+                                            alert("不能为同一人分配任务两次。");
+                                            break;
+                                        } else {
+                                            userArr.push($(el).val());
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    
+
+                    if (starttime > endtime) {
+                        alert('结束时间不得小于开始时间！！！');
+                    } else {
+
+                        if (starttime == '' || starttime == undefined || starttime == null) {
+                            alert("开始时间不能为空");
+                            $('.main').find('.starttime').focus();
+                        } else if (endtime == '' || endtime == undefined || endtime == null) {
+                            alert("结束时间不能为空");
+                            $('.main').find('.endtime').focus();
+                        } else {
+                            $('.main').find('.form-item-inner').each(function (i) {
+                                if ($(this).find('textarea').val() == '') {
+                                    flag = false;
+                                    alert("解决方案不能为空");
+                                    $(this).find('textarea').focus();
+                                    return false;
+                                }
+                                if (i == index && flag == true) {
+                                    $('.main').find('.form-item-inner').each(function () {
+                                        ajax(title, $(this).find('select option:selected').attr('data-uid'), $(this).find('select option:selected').val(), $(this).find('textarea').val(), starttime, endtime);
+                                    });
+                                }
+                            });
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+                });
+            }
+
+            function ajax(title, userid, name, content, starttime, endtime) {
+                $.ajax({
+                    url: 'doDistribute?uid=@ViewBag.uid',
+                    type: 'post',
+                    data: {
+                        title: title,
+                        userid: userid,
+                        name: name,
+                        content: content,
+                        starttime: starttime,
+                        endtime: endtime
+                    },
+                    success: function (json) {
+                        if (json.success) {
+                            alert(json.message);
+                            window.location.reload();
+                        } else {
+                            alert(json.message);
+                            window.location.reload();
+                        }
+                    },
+                    error: function () {
+                        alert('出错了，请检查网络');
+                    }
+                });
+            }
+        });
+    </script>

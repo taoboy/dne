@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model List<com.gdce_task.Model.T_Task>
+}
+@section ul{
+    <ul class="nav-stacked">
+        <li><a href="ClientAAdd">发起任务</a></li>
+        <li><a href="ClientAList">任务列表</a></li>
+        <li><a href="~/Login/UserCenter">个人中心</a></li>
+    </ul>
+}
+<div class="row">
+    <div class="col-md-6" style="margin: 0 auto !important; float: inherit !important; ">
+        <div class="panel panel-primary List">
+            <div class="panel-heading text-center">个人中心</div>
+            <table class="tab-user">
+                <tr class="tr-user">
+                    <td class="td-user1">姓名：</td>
+                    <td class="td-user2">@Session["username"]</td>
+                </tr>
+                <tr class="tr-user">
+                    <td class="td-user1">部门：</td>
+                    <td class="td-user2">@Session["dept"]</td>
+                </tr>
+                <tr class="tr-user">
+                    <td class="td-user1">描述：</td>
+                    <td class="td-user2">@Session["descr"]</td>
+                </tr>
+                <tr class="tr-user">
+                    <td class="td-user1">创建时间：</td>
+                    <td class="td-user2">@Session["create"]</td>
+                </tr>
+
+            </table>
+            <div class="form-group form-user">
+                <div class="input-group ">
+                    <span class="input-group-addon" id="lbl_password">
+                        <i class="glyphicon glyphicon-earphone i-user"></i>
+                    </span>
+                    <input type="text" class="form-control" name="password" id="phone" placeholder="@Session["phone"]" value="@Session["phone"]" autocomplete="off" />
+                    <button type="submit" class="btn btn-success change-phone" onclick="telephone()">修改</button>
+                </div>
+            </div>
+            <form method="post" role="form" id="form_login" class="form-user">
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="lbl_password">
+                            <i class="glyphicon glyphicon-lock i-user"></i>
+                        </span>
+                        <input type="password" class="form-control oldpass" name="password" id="password" placeholder="原密码..." autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="lbl_password">
+                            <i class="glyphicon glyphicon-lock i-user"></i>
+                        </span>
+                        <input type="password" class="form-control pass1" name="password" id="password" placeholder="修改密码..." autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="lbl_password">
+                            <i class="glyphicon glyphicon-lock  i-user"></i>
+                        </span>
+                        <input type="password" class="form-control pass2" name="password" id="password" placeholder="确认密码..." autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <p type="submit" class="btn btn-primary btn-block" onclick="changepass()">确认修改</p>
+                    <div class="btn  btn-block cance btn-danger">
+                        <a href="~/" style="color:#fff;">注销</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/Lib/wigets/jQuery.md5.js"></script>
+<script type="text/javascript">
+    var phone = '@Session["phone"]';
+
+    $("#phone").change(function () {
+        if (phone == $("#phone").val()) {
+            $('.change-phone').css('display', 'none');
+        } else {
+            $('.change-phone').css('display', 'initial');
+        }
+    });
+    $('.change-phone').css('display','none');
+    function telephone() {
+
+        var p = $("#phone").val();
+        success: $.ajax({
+            type: 'post',
+            url: "phone?p=" + p,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            success: function () {
+                alert('修改联系方式成功');
+                window.location.reload();
+            },
+            error: function () {
+                alert('出错了，请检查网络');
+                window.location.reload();
+            }
+        })
+    };
+    function changepass() {
+
+        var pass1 = $(".pass1").val();
+        pass1 = $.md5(pass1);
+        pass1 = $.md5(pass1.split("").reverse().join(""));
+
+
+        var pass2 = $(".pass2").val();
+        pass2 = $.md5(pass2);
+        pass2 = $.md5(pass2.split("").reverse().join(""));
+        if(pass1 != pass2){
+            alert("两次密码不一致，请重新输入");
+        } else {
+            var oldpass = $(".oldpass").val();
+            oldpass = $.md5(oldpass);
+            oldpass = $.md5(oldpass.split("").reverse().join(""));
+            success: $.ajax({
+                type: 'post',
+                url: "changePass?pass=" + pass1 + "&old=" + oldpass,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success: function (json) {
+                    alert(json.message);
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('出错了，请检查网络');
+                    window.location.reload();
+                }
+            })
+    }
+
+    };
+
+</script>
+

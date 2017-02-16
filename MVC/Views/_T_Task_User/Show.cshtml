@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Show";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model com.gdce_task.Model.T_Task_User
+}
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><i class="fa fa-file-o"></i> 任务发起角色表 查看</h3>
+                <a class="pull-right" href="javascript:history.go(-1)"><i class="fa fa-reply"></i> 后退</a>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+
+                <table class="table table-condensed table-striped no-border" cellspacing="0" rules="all" id="Content_Body_DetailsView1" style="border-width:0px;border-collapse:collapse;">
+
+
+                    <tr>
+                        <td width="150"><b>id：</b></td>
+                        <td>@Model.id</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>任务编号：</b></td>
+                        <td>@(Model.taskIdEntity != null?Model.taskIdEntity.title:"")</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>角色帐号：</b></td>
+                        <td>@(Model.userIdEntity != null?Model.userIdEntity.name:"")</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>DESCR：</b></td>
+                        <td>@Model.descr</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <a class="btn btn-primary" href="Edit?id=@Model.id">
+                                <i class="fa fa-edit"></i> 编辑
+                            </a>
+                            <a class="btn btn-danger" onclick="delConfirm(@Model.id)">
+                                <i class="fa fa-trash-o"></i> 删除
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+</div><!-- /.box-body -->
+
+            <div class="overlay hidden" id="loading_ani">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div><!--Ajax遮罩层-->
+
+        </div><!--box-->
+    </div><!--col-6-->
+
+</div><!--row-->

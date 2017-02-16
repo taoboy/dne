@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model List<com.gdce_task.Model.T_Task>
+}
+@section ul{
+    <ul class="nav-stacked">
+        <li><a href="ClientAAdd">发起任务</a></li>
+        <li><a href="ClientAList">任务列表</a></li>
+        <li><a href="~/Login/UserCenter">个人中心</a></li>
+    </ul>
+}
+<div>
+    <div class="row">
+        <div class="col-md-12 main">
+            <div class="panel panel-primary List" style="overflow:auto;">
+                <div class="panel-heading text-center">任务列表</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-sm-3"></div>
+                        <div class="form-group col-sm-3">
+                            <select class="form-control search-item" onchange="select(this)">
+                                <option value="" id="s_0">全部</option>
+                                @foreach (var item in (List<com.gdce_task.Model.T_Task_Status>)ViewBag.status)
+                                {
+                                    <option value="@item.id" id="s_@item.id" @(item.id.ToString() == Request["status"] ? "selected" : "")>@item.descr</option>
+                                }
+                            </select>
+                        </div>
+                        <form class="input-group col-sm-3" method="post" action="" style="white-space: nowrap; margin-left:15px;">
+                            <input type="text" class="form-control" id="search" placeholder="输入标题进行模糊查询" value="@Request.QueryString["s"]" style="width:225px">
+                            <span onclick="doSearch()" type="submit" class="input-group-addon glyphicon glyphicon-search" style="cursor: pointer; top: 0px;padding:10px 25px 8px 10px;margin-left:-1px;background-color:#EEE;border-radius:0 5px 5px 0;border:1px solid #ccc"></span>
+                        </form>
+                    </div>
+                    <table class="table table-bordered table-responsive" style="overflow:auto;">
+                        <thead style="overflow:auto;">
+                            <tr>
+                                <th>序号</th>
+                                <th>标题</th>
+                                <th>内容</th>
+                                <th>状态</th>
+                                <th>验收时间</th>
+                                <th>剩余时间</th>
+                                <th>任务历史记录</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var index = 0;}
+                            @foreach (var item in (List<com.gdce_task.Model.T_Task>)ViewBag.list)
+                            {
+                                index++;
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@item.title</td>
+                                    <td>@item.content</td>
+                                    <td>@item.statusIdEntity.descr</td>
+                                    <td class="endtime">@item.endTime</td>
+                                    <td class="remaining"></td>
+                                    <td><a id="a2" href="~/Task/Task?id=@item.id">点击查看</a></td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                    @RenderPage("~/Views/Paging.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.main').find('.table-bordered').find('tr').each(function () {
+            if ($(this).find('.endtime').text() == '') {
+                $(this).find('.endtime').text('尚未确定验收时间');
+                $(this).find('.remaining').text('尚不明确');
+            } else {
+                var date1 = new Date($(this).find('.endtime').text().replace(/-/g, "/"));
+                $(this).find('.endtime').text(date(date1));
+                var date2 = new Date();
+                if (Math.floor((date1 - date2) / (60 * 60 * 24 * 1000) + 1) < 0) {
+                    $(this).find('.remaining').text("已到期");
+                } else {
+                    $(this).find('.remaining').text(Math.floor((date1 - date2) / (60 * 60 * 24 * 1000)) + 1 + "天");
+                }
+            }
+        });
+        var list = $('.sidebar').html;
+
+        //$('.sidebar').remove();
+        //$('.slimScrollDiv').remove();
+        $('.main-header').html += '<p>今天天气很好</p>';
+        function date(date) {
+            var result = date.getFullYear() + "年";
+            if (date.getMonth() == 11) {
+                result += "12月";
+            } else {
+                result += date.getMonth() + 1 + "月";
+            }
+            result += date.getDate() + "日";
+            return result;
+        }
+    });
+    var status;
+    function doSearch() {
+        var criteria = $("#search").val();
+        location.href = "?s=" + criteria + "&status=" + status;
+    }
+    function select(e) {
+        status = e.value;
+    }
+
+</script>

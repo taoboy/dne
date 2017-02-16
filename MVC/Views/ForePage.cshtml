@@ -1,0 +1,205 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="baidu-site-verification" content="3ztG4oI0ku" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="../asset/css/style.css" type="text/css" media="all" />
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="../asset/js/html5.js"></script>
+    <![endif]-->
+    <style>
+        .logo a {
+            text-decoration: none;
+            font-size: 25px;
+            color: #fff;
+            font-family: '微软雅黑';
+        }
+
+            .logo a:hover {
+                color: #ccc;
+            }
+
+        #navbg {
+            opacity: 0.95 !important;
+        }
+
+        #detailed img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+    </style>
+
+    <title>@ViewBag.Title</title>
+    @RenderSection("head", false)
+    
+</head>
+<body>
+    <header>
+        <div id="navbg"></div>
+        <div class="wrapper">
+            <h1 class="logo">
+                <a href="index.php">广州贰月软件有限公司</a>
+            </h1>
+            <nav>
+                <ul>
+                    <li class="home"><a href="index.php">首页<span>网站首页！</span></a></li>
+                    <li class="about"><a href="post.php?slug=about" title="关于我们">关于<span>我们是谁？</span></a></li>
+                    <li class="service"><a href="post.php?slug=service" title="网站建设">服务<span>我们能做什么？</span></a></li>
+                    <li class="cases"><a href="category.php?slug=cases" title="网页制作">案例<span>我们做过什么？</span></a></li>
+                    <li class="client"><a href="post.php?slug=contact" title="联系我们">联系方式<span>我们在哪里？</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer>
+        <div id="footerlink">
+            <nav class="wrapper">
+                <a href="index.htm">首页</a>
+                <a href="about/index.htm">关于</a>
+                <a href="service/index.htm">服务</a>
+                <a href="case/index.htm">案例</a>
+                <a href="fangan/index.htm">方案</a>
+                <a href="contact/index.htm">联系</a>
+                <a href="news/index.htm">新闻</a>
+                <a id="gotop" href="javascript:void(0)">top</a>
+            </nav>
+        </div>
+        <div id="footerinfo">
+            <div class="wrapper">
+                <h2>联系我们<strong>Contact</strong></h2>
+                <p>
+                    <a target="_blank" href="javascript:if(confirm('http://wpa.qq.com/msgrd?v=3&uin=108338340&site=qq&menu=yes'))window.location='http://wpa.qq.com/msgrd?v=3&uin=429592913&site=qq&menu=yes'"><img border="0" src="../asset/images/qq.png" alt="点击这里给我发消息" title="点击这里给我发消息" /></a><br />
+                    电话：400 8888 8888<br />
+                    传真：400 8888 8888<br />
+                    电子邮件：admin@unn114.com<br />
+                    公司地址：重庆市某某某某某某某某某<br />
+                    备案编号：蜀ICP备000000001<br />
+                    Copyright © 2013 - 2014 luidea.com All rights reserved.
+                </p>
+                <img src="../asset/images/map.gif" id="homemap" width="258" height="190" alt="公司位置" />
+            </div>
+            <div class="links">
+                <h2>友情链接<strong>Links</strong></h2>
+                <p>
+                    <ul>
+                        <li>
+                            <a href="http://www.777moban.com/" target='_blank'>建荣博客</a>
+                        </li>
+                        <li>
+                            <a href="http://www.777moban.com/" target='_blank'>建荣博客</a>
+                        </li>
+                        <li>
+                            <a href="http://www.777moban.com/" target='_blank'>建荣博客</a>
+                        </li>
+                        <li>
+                            <a href="http://www.777moban.com/" target='_blank'>建荣博客</a>
+                        </li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="../asset/js/jquery.1.8.2.min.js"></script>
+    <script type="text/javascript" src="../asset/js/jquery.plugin.min.js"></script>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="../asset/js/killie6.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        //<![CDATA[
+        //Nav Start
+        $("header>div>nav>ul>li>a").hover(function(){
+            $(this).parent().stop(false,true).animate({"background-position-x":"6px",opacity:"0.7"},{duration:"normal", easing: "easeOutElastic"});
+        },function(){
+            $(this).parent().stop(false,true).animate({"background-position-x":"10px",opacity:"1"},{duration:"normal", easing: "easeOutElastic"});
+        });
+        <!--- 首页 ---->
+        $('.ad_img,#banner_ctr,#client').pngFix();
+        $(window).scroll(function(){
+            $(this).scrollTop()>80?$("#navbg").stop(false,true).animate({opacity:"1"},"normal"):$("#navbg").stop(false,true).animate({opacity:"0.8"},"normal");
+        });
+        //Banner Start
+        var curIndex=0;
+        var time=800;
+        var slideTime=5000;
+        var adTxt=$("#banner_img>li>div>.ad_txt");
+        var adImg=$("#banner_img>li>div>.ad_img");
+        var int=setInterval("autoSlide()",slideTime);
+
+        $("#banner_ctr>ul>li[class!='first-item'][class!='last-item']").click(function(){
+            show($(this).index("#banner_ctr>ul>li[class!='first-item'][class!='last-item']"));
+            window.clearInterval(int);
+            int=setInterval("autoSlide()",slideTime);
+        });
+
+        function autoSlide(){
+            curIndex+1>=$("#banner_img>li").size()?curIndex=-1:false;
+            show(curIndex+1);
+        }
+        function show(index){
+            $.easing.def="easeOutQuad";
+            $("#drag_ctr,#drag_arrow").stop(false,true).animate({left:index*115+20},300);
+            $("#banner_img>li").eq(curIndex).stop(false,true).fadeOut(time);
+            adTxt.eq(curIndex).stop(false,true).animate({top:"340px"},time);
+            adImg.eq(curIndex).stop(false,true).animate({right:"120px"},time);
+            setTimeout(function(){
+                $("#banner_img>li").eq(index).stop(false,true).fadeIn(time);
+                adTxt.eq(index).children("p").css({paddingTop:"50px",paddingBottom:"50px"}).stop(false,true).animate({paddingTop:"0",paddingBottom:"0"},time);
+                adTxt.eq(index).css({top:"0",opacity:"0"}).stop(false,true).animate({top:"170px",opacity:"1"},time);
+                adImg.eq(index).css({right:"-50px",opacity:"0"}).stop(false,true).animate({right:"10px",opacity:"1"},time);
+            },200)
+            curIndex=index;
+        }
+        //Banner End
+        //Cases Start
+        if($.support.transition){
+            $("#cases>ul>li").hover(function(){
+                $("img",this).stop(false,true).transition({
+                    perspective: '300px',
+                    rotateY: '180deg',
+                    opacity: '0'
+                });
+                $("p",this).css({display:'block',opacity:'0',rotateY: '-180deg'}).stop(false,true).transition({
+                    perspective: '300px',
+                    rotateY: '0deg',
+                    opacity: '1'
+                });
+            },function(){
+                $("img",this).show().stop(false,true).transition({
+                    perspective: '300px',
+                    rotateY: '0deg',
+                    opacity: '1'
+                });
+                $("p",this).stop(false,true).transition({
+                    perspective: '300px',
+                    rotateY: '180deg',
+                    opacity: '0'
+                });
+            });
+        }else{
+            $("#cases>ul>li").hover(function(){
+                $("img",this).stop(false,true).slideUp("fast");
+                $("p",this).stop(false,true).slideDown("fast");
+            },function(){
+                $("img",this).stop(false,true).slideDown("fast");
+                $("p",this).stop(false,true).slideUp("fast");
+            });
+        }
+        $("#cases>ul>li>img").lazyload({effect:"fadeIn",failurelimit:10});
+        $("#gotop").click(function(){$('body,html').animate({scrollTop:0},500);})
+
+        //]]>
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Show";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model com.gdce_task.Model.T_User
+}
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><i class="fa fa-file-o"></i> 用户表 查看</h3>
+                <a class="pull-right" href="javascript:history.go(-1)"><i class="fa fa-reply"></i> 后退</a>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+
+                <table class="table table-condensed table-striped no-border" cellspacing="0" rules="all" id="Content_Body_DetailsView1" style="border-width:0px;border-collapse:collapse;">
+
+
+                    <tr>
+                        <td width="150"><b>id：</b></td>
+                        <td>@Model.id</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>用户帐号：</b></td>
+                        <td>@Model.account</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>用户角色：</b></td>
+                        <td>@(Model.roleIdEntity != null?Model.roleIdEntity.name:"")</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>用户名字：</b></td>
+                        <td>@Model.name</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>用户密码：</b></td>
+                        <td>@Model.password</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>创建时间：</b></td>
+                        <td>@Model.createTime</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>联系电话：</b></td>
+                        <td>@Model.phone</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>部门名字：</b></td>
+                        <td>@Model.dept</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>用户描述：</b></td>
+                        <td>@Model.descr</td>
+                    </tr>
+
+                    <tr>
+                        <td width="150"><b>状态：</b></td>
+                        <td>@Model.status</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <a class="btn btn-primary" href="Edit?id=@Model.id">
+                                <i class="fa fa-edit"></i> 编辑
+                            </a>
+                            <a class="btn btn-danger" onclick="delConfirm(@Model.id)">
+                                <i class="fa fa-trash-o"></i> 删除
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+</div><!-- /.box-body -->
+
+            <div class="overlay hidden" id="loading_ani">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div><!--Ajax遮罩层-->
+
+        </div><!--box-->
+    </div><!--col-6-->
+
+</div><!--row-->

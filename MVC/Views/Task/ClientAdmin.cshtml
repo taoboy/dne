@@ -1,0 +1,232 @@
+﻿@{
+    ViewBag.Title = "";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>任务跟单系统</title>
+    <link rel="stylesheet" type="text/css" href="~/asset/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/asset/css/clientAdmin.css">
+
+
+
+</head>
+<body>
+    <header>
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="~/asset/img/user.jpg" />
+            </a>
+            <span>@ViewBag.aaa</span>
+            <span>网络部主管</span>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">更换头像</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">修改个人信息</a></li>
+            </ul>
+            <a role="menuitem" tabindex="-1" href="~/" class="a-quit">注销</a>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#">审核任务</a></li>
+                    <li><a href="#">发起任务</a></li>
+                    <li><a href="#">查看任务<span class="badge">13</span></a></li>
+                    <li><a href="#">任务报表</a></li>
+                </ul>
+            </div>
+            <div class="col-md-10 main">
+                <div class="panel panel-primary check-task">
+                    <div class="panel-heading text-center">审核任务</div>
+                    <div class="panel-body">
+                        <div class="alert alert-success text-center" role="alert">
+                            <b>提示：</b>您已成功审核一个任务
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>申请人</th>
+                                        <th>标题</th>
+                                        <th>内容</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>小刘</td>
+                                        <td>通用日志系统</td>
+                                        <td>集合现有日志系统，重新构建通用性强的日志系统</td>
+                                        <td>
+                                            <button class="btn btn-primary" type="button">通过</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-primary launch-task">
+                    <div class="panel-heading text-center">发起任务</div>
+                    <div class="panel-body">
+                        <div class="alert alert-success text-center" role="alert">
+                            <b>提示：</b>您已成功发起一个任务
+                        </div>
+                        <form class="form-horizontal" action="addTask">
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+                                <label class="col-sm-2 control-label">任务标题</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="title" id="title" required placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+                                <label class="col-sm-2 control-label">任务内容</label>
+                                <div class="col-sm-6">
+                                    <textarea class="form-control" rows="3" name="content" id="content" required></textarea>
+                                </div>
+                            </div>
+                            
+                           <!-- 
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+                                <label class="col-sm-2 control-label">时间</label>
+                                <div class="col-sm-6">
+                                    <input class="Wdate form-control" type="text" onclick="WdatePicker()">
+                                </div>
+                            </div>
+                               -->
+                            
+                            <div class="form-group">
+                                <div class="col-sm-offset-5 col-sm-6">
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary view-task">
+                    <div class="panel-heading text-center">查看任务</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-sm-3"></div>
+                            <div class="form-group col-sm-3">
+                                <select class="form-control">
+                                    <option>默认排序</option>
+                                    <option>最近一月</option>
+                                    <option>最近三月</option>
+                                    <option>待审核</option>
+                                    <option>待分发</option>
+                                    <option>待验收</option>
+                                    <option>未完成</option>
+                                    <option>即将完成</option>
+                                </select>
+                            </div>
+                            <div class="input-group col-sm-3">
+                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                <input type="text" class="form-control" id="" placeholder="输入标题进行模糊查询">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>标题</th>
+                                        <th>内容</th>
+                                        <th>进度</th>
+                                        <th>开始时间</th>
+                                        <th>状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--
+                                    <tr>
+                                        <td>1</td>
+                                        <td>通用日志系统</td>
+                                        <td>集合现有日志系统，重新构建通用性强的日志系统</td>
+                                        <td>前端已完成</td>
+                                        <td>2016-07-13</td>
+                                        <td>林健工作室</td>
+                                    </tr>
+                                        -->
+                                    @foreach (var item in (List<com.gdce_task.Model.T_Task>)ViewBag.list)
+                                    {
+                                        
+                                    
+                                    <tr>
+                                        <td>@item.id</td>
+                                        <td>@item.title</td>
+                                        <td>@item.content</td>
+                                        <td></td>
+                                        <td>@item.createTime.Value.ToString("yyyy-MM-dd hh:mm")</td>
+                                        <td>@item.statusIdEntity.descr</td>
+                                    </tr>
+                                        
+                                    }
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/asset/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="~/asset/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/asset/js/WdatePicker.js"></script>
+    <script type="text/javascript" src="~/asset/js/clientAdmin.js"></script>
+
+    <!--表单验证-->
+    <script src="~/Lib/bootstrap-validator/dist/validator.js"></script>
+    <!--表单Ajax提交-->
+    <script src="~/Lib/wigets/jquery.form.js"></script>
+
+    <script>
+
+        $(function () {
+ 
+ 
+            //表单提交统一处理
+            $('form').validator().on('submit', function (e) {
+                if (e.isDefaultPrevented()) {
+                    //js表单验证不通过
+                } else {
+                    //防止提交表单数据，改用Ajax提交，地址为form里面定义的路径
+                    e.preventDefault();
+                    $('form').ajaxSubmit({
+                        type: 'post',
+                        success: function (json) {
+                            alert(json.message);
+                            //if (json.success) {
+                            //    setTimeout('location.href = "List"', 1500);
+                            //}
+                        },
+                        error: function () {
+                            alert('出错了，请检查网络');
+                        }
+                    });
+                }
+            });
+
+ 
+
+        });
+
+    </script>
+
+</body>
+</html>

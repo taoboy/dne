@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+    
+    int page = 1;//当前页数
+    if (!String.IsNullOrEmpty(Request.QueryString["p"])) { 
+        page = int.Parse(Request.QueryString["p"]);
+    }
+
+    String search = "";
+    if (!String.IsNullOrEmpty(Request.QueryString["s"])) {
+        search = Request.QueryString["s"];
+    }
+
+    String status = "";
+    if (!String.IsNullOrEmpty(Request.QueryString["status"]))
+    {
+        status = Request.QueryString["status"];
+    }
+    
+    int totalRows = 1;
+    if (ViewBag.total != null) { 
+        totalRows = ViewBag.total;//总记录数
+    }
+
+    int pageSize = 10;//每页显示记录数
+    if (ViewBag.pageSize != null) {
+        pageSize = ViewBag.pageSize;
+    }
+        
+    //计算总页数
+    int pageCount = totalRows % pageSize == 0 ? totalRows / pageSize : totalRows / pageSize + 1;
+
+    //计算起始页数
+    int pageStart = page <= 5 ? 1 : page - 5;
+    pageStart = pageStart <= 1 ? 1 : pageStart;
+
+    //计算结束页数            
+    int pageEnd = page <= 5 ? 10 : page + 5;
+    pageEnd = pageEnd >= pageCount ? pageCount : pageEnd;
+
+}
+
+<ul class="pagination">
+    @if (page > 1) { 
+        <li><a href='?p=1&s=@search&status=@status'>第一页</a></li>
+        <li><a href='?p=@(page-1)&s=@search&status=@status'>上一页</a></li>
+    }
+
+    @for (int i = pageStart; i <= pageEnd; i++)
+    {
+        <li class="@(i == page?"active":"")" ><a href='?p=@(i)&s=@search&status=@status'>@i</a></li>
+    }
+
+    @if (page < pageCount) {
+        <li><a href='?p=@(page+1)&s=@search&status=@status'>下一页</a></li>
+        <li><a href='?p=@(pageCount)&s=@search&status=@status'>最后一页</a></li>
+    }
+
+</ul>
+

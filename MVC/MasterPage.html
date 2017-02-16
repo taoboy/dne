@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <title>广邮院--任务管理系统</title>
+    <!--加载顺序不能错-->
+    <!--jQ-->
+    <script src="Lib/jquery-1.9.1.js"></script>
+    <!--BootStrap-->
+    <link href="Lib/bootstrap-3.3.2-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="Lib/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="Lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
+
+    <!--侧栏菜单-->
+    <script src="Lib/menu.js"></script>
+
+    <!--AdminLTE-->
+    <link href="Lib/AdminLTE-master/dist/css/AdminLTE.css" rel="stylesheet" />
+    <link href="Lib/AdminLTE-master/dist/css/skins/_all-skins.min.css" rel="stylesheet" />
+    <script src="Lib/AdminLTE-master/dist/js/app.js"></script>
+    <script src="Lib/AdminLTE-master/plugins/slimScroll/jquery.slimscroll.js"></script>
+    <!--Font Awesome-->
+    <link href="Lib/font-awesome-4.3.0/css/font-awesome.css" rel="stylesheet" />
+    <!--glyphicons 的简写版 gi-->
+    <link href="Lib/glyphicons.css" rel="stylesheet" />
+    <!--日期时间控件-->
+    <link href="Lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="Lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="Lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!--数字控件-->
+    <script src="Lib/wigets/numericInput.min.js"></script>
+    <!--表单验证-->
+    <script src="Lib/bootstrap-validator/dist/validator.js"></script>
+    <!--表单Ajax提交-->
+    <script src="Lib/wigets/jquery.form.js"></script>
+    <!--模式对话框-->
+    <link href="Lib/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css" rel="stylesheet" />
+    <script src="Lib/bootstrap3-dialog/dist/js/bootstrap-dialog.js"></script>
+
+    <!--本页面自定义的一些东西-->
+    <link href="Lib/master.css" rel="stylesheet" />
+    <script src="Lib/master.js"></script>
+
+    <!---兼容IE8--->
+    <script src="/Lib/html5shiv.js"></script>
+    <script src="/Lib/respond.js"></script>
+
+    <title>FebSoft CodeGen</title>
+    <!--@RenderSection("head", false)-->
+
+</head>
+
+<body class="skin-purple-light fixed">
+
+    <div class="wrapper">
+
+        <header class="main-header">
+            <a href="#" class="logo visible-lg" style="background-color:#fff">
+                <img src="logo.png" width="200" height="50" style="margin-left:-10px;margin-top:-5px;" />
+            </a>
+
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top nav-title" role="navigation" style="margin-top:0px;">
+
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+
+                <span class="" style="position:absolute;top:10px;left:0px;font-size:20px;color:#fff;width:100%;z-index:-1;">
+                    <center>任务管理系统
+                    </center>
+                </span>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!--<img src="images/gupt_logo.png" class="user-image" alt="User Image" />-->
+                                <span class="gi gi-user"></span>
+                                <span class="hidden-xs"><asp:Literal ID="lit_uname1" runat="server" /></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <!--<img src="images/gupt_logo.png" class="img-circle" alt="User Image" />-->
+                                    <span class="gi gi-user" style="font-size:100px;color:#fff"></span>
+                                    <p>
+                                        <asp:Literal ID="lit_uname2" runat="server" />
+                                        <small><asp:Literal ID="lit_udescr" runat="server" /></small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="col-xs-12 text-center">
+                                        <!--@(Session["user"] != null ? ((com.gupt_quiz.Model.T_User)Session["user"]).name : "未登录")<br/>-->
+                                        <a href="#">石茜</a>
+                                        <a href="#">网络部用户</a><br />
+                                    </div>
+                                </li>
+
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="../../U/UserLogin/UserProfile.aspx" class="btn btn-default btn-flat">个人中心</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="~/index/logout" class="btn btn-default btn-flat">注销</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- User Account End -->
+
+                    </ul><!-- Nav Bar End -->
+                </div>
+            </nav>
+        </header><!-- Header End -->
+        <!-- =============================================== -->
+        <!-- Left side column. contains the sidebar -->
+        <aside class="main-sidebar" style="padding-top:50px !important;">
+            <!-- sidebar: style can be found in sidebar.less -->
+			<div class="sidebar">
+                <ul class="nav nav-pills nav-stacked">
+                </ul>
+            </div>
+        </aside><!-- sidebar End -->
+        <!-- =============================================== -->
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <div class="content-wrapper">
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="alert bg-gray" role="alert" style="display:none;" runat="server" id="alert_box">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span id="msg_text" runat="server">您的密码为初始密码，请尽快修改</span>
+                </div>
+
+                <!-- @RenderBody() -->
+
+            </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 0.1
+            </div>
+            <strong>Copyright © 2016 <a href="#">K's Studio</a>.</strong> All rights reserved.
+        </footer>
+    </div><!-- ./wrapper -->
+
+</body>
+</html>

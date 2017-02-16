@@ -1,0 +1,223 @@
+﻿body {
+    margin:0 !important;
+}
+
+a {
+    text-decoration:none !important;
+    cursor:pointer !important;
+}
+
+#list_panel {
+    position:relative;
+}
+
+.table th {
+   text-align: center;   
+}
+
+.box-body img,
+.comment-content img
+{
+    border-radius:5px;
+    max-width:400px;
+    max-height:300px;
+}
+
+.comment td{
+    border-radius:5px !important;    
+    padding:5px;
+}
+.comment tr{
+    border-radius:5px !important; 
+}
+.comment-head{
+    background-color:#f1f1f8;    
+}
+.comment-head-2{
+    background-color:#fff;
+}
+.comment-content{
+    padding:10px 5px 5px 10px !important;   
+    border-bottom:solid 1px #eee !important;
+}
+
+
+/*修改了原BootStrap 用于 radio 的不明显的css*/
+.btn-default:hover {            
+        color: #fff;
+        background-color: #337ab7 !important;
+        border-color: #2e6da4;
+}
+
+.btn-default.active {
+    color: #fff;
+    background-color: #286090 !important;
+    border-color: #204d74;
+}
+.sidebar{
+    background-color: #F5F5F5;
+}
+.nav-title{
+    background-color: #337AB7!important;
+}
+.nav-stacked {
+    text-align: center;
+    list-style: outside none none;
+    margin-bottom: 0;
+    margin-left: 17px;
+    margin-top: 10px;
+    padding-left: 0;
+    width: 200px;
+    height: 50px;
+    position: absolute;
+}
+.nav-stacked > li a{
+    color: #fff!important;
+    margin:0 auto;
+    line-height: 3.5;
+    height: 100px;
+}
+.nav-stacked > li{
+    width: 200px;
+    height: 50px;
+    background-color: #337AB7;
+    color: #fff!important;
+    border-radius: 10px;
+}
+.active a{
+    border-left: none!important;
+    background-color:#337AB7!important;
+}
+.a1{
+    color:#fff!important;
+}
+.a-nav{
+    width: 600px!important;
+    height: 50px;
+    font-size: 18px!important;
+    margin:40px 70px 10px 70px!important;
+    color: #fff!important;
+}
+.nav-title1{
+    background-color: #337AB7;
+    width: 300px;
+    height: 50px;
+    padding-top: 10px;
+}
+.panel-body{
+    text-align: center;
+}
+.glyphicon{
+    float:left;
+    top:10px;
+}
+.i-user{
+    top:0px;
+}
+.tab-user{
+    width:80%;
+    margin:20px auto;
+}
+.tr-user{
+
+}
+.td-user1{
+    height:40px;
+    width:80px;
+    text-align:right;
+    border:1px #ccc solid;
+}
+.td-user2{
+    height:40px;
+    width:auto;
+    text-align:left;
+    border:1px #ccc solid;
+    padding-left:10px;
+}
+.form-user{
+    width:80%;
+    margin:20px auto;
+}
+.cance{
+    border:1px #ccc solid;
+}
+.change-phone{
+    float:right;
+    position:absolute;
+    z-index:1099;
+    margin-left:-53px;
+}
+.change-content{
+    float:right;
+    margin:10px 255px 0px 5px;
+    /*display:none;*/
+}
+.cancel-content{
+    float:right;
+    margin:-34px 195px 0px 5px;
+    /*display:none;*/
+}
+.edit-content{
+    margin-left:10px;
+    margin-top:-12px;
+}
+.text-content{
+
+}
+.delete-content{
+    float:right;
+    margin:-34px 135px 0px 5px;
+    /*display:none;*/
+}
+.edit-report{
+    background-color:;
+    width:400px;
+    height:80px;
+    /*display:none;*/
+}
+.text-content{
+    width:400px;
+    height:380px;
+}
+.i-content{
+    width:40px;
+    margin-left:185px;
+    margin-top:-20px;
+    font-size:12px;
+    text-align:center!important;
+    color:#fff;
+    background-color:#337ab7;
+    position:absolute;
+    border-radius:3px;
+}
+.i-delete{
+    width:40px;
+    font-size:12px;
+    text-align:center!important;
+    color:#fff;
+    position:absolute;
+    background-color:#DD4B39;
+    border-radius:3px;
+    margin-left:235px;
+    margin-top:-20px;
+}
+.from-content{
+    display:none;
+}
+
+td {
+    word-wrap:break-word;
+    max-width:450px;
+    overflow:auto!important;
+    min-width:60px;
+}
+.panel-body{
+    overflow:auto;
+}
+.header-details{
+    background-color:#5CB85C!important;
+}
+.table-details > td{
+    word-wrap: break-word;
+    max-width:500px;
+}

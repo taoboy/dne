@@ -1,0 +1,45 @@
+/*头部样式开始*/
+header{
+	padding: 10px;
+	background-color: #F5F5F5;
+	border-bottom: 1px solid #ccc;
+}
+header img{
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+/*左边内容区样式开始*/
+.sidebar{
+	background: #F5F5F5;
+	border-right: 1px solid #ccc;
+	bottom: 0;
+	padding: 20px;
+	position: fixed;
+	top: 81px;
+}
+.sidebar li{
+	margin: 10px auto;
+	text-align: center;
+}
+/*右边内容区样式开始*/
+.main{
+	bottom: 0;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 81px;
+    padding: 20px;
+}
+.main .panel-primary{
+	margin-top: 10px;
+}
+.dropdown a{
+    text-decoration:none;
+}
+.a-quit{
+    color:#ee4d4d;
+}
+    .a-quit:hover{
+        color:#c042c6;
+    }

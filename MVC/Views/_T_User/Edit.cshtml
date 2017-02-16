@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model com.gdce_task.Model.T_User
+    String action = Model.id == null ? "Add" : "Update";
+}
+<form method="post" id="EditForm" action="@action">
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><i class="fa fa-edit"></i> 用户表 编辑</h3>
+                <a class="pull-right" href="javascript:history.go(-1)"><i class="fa fa-reply"></i> 后退</a>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+
+                <table class="table table-condensed no-border" cellspacing="0" rules="all" id="Content_Body_DetailsView1" style="border-width:0px;border-collapse:collapse;">
+
+
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>用户帐号</label>
+                                <input type="text" class="form-control" name="account" id="account" required value="@Model.account">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>用户角色</label>
+                                <select id="roleId" class="form-control" name="roleId" >
+                                    @foreach (var item in Model.roleIdEntitys) {                                     
+                                    <option value="@item.id" @(item.id == Model.roleId?"selected":"")>
+                                        @item.name
+                                    </option>
+                                    }
+                                </select>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>用户名字</label>
+                                <input type="text" class="form-control" name="name" id="name"  value="@Model.name">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>用户密码</label>
+                                <input type="text" class="form-control" name="password" id="password"  value="@Model.password">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>创建时间</label>
+                                <input  type="text" name="createTime" id="createTime" class="form-control datetimepicker" 
+					value="@(Model.createTime==null?"":Model.createTime.Value.ToString("yyyy-MM-dd HH:mm"))">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>联系电话</label>
+                                <input type="text" class="form-control" name="phone" id="phone"  value="@Model.phone">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>部门名字</label>
+                                <input type="text" class="form-control" name="dept" id="dept"  value="@Model.dept">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>用户描述</label>
+                                <input type="text" class="form-control" name="descr" id="descr"  value="@Model.descr">
+                            </div>
+                        </td>
+                    </tr>
+
+		<tr>
+			<td>
+            <div class="form-group">
+                <label>状态</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default @((Model.status != null && Model.status.Value)?"active":"")">
+                        <input type="radio" name="status"  value="True" 
+				@((Model.status != null && Model.status.Value)?"checked":"")>
+			是
+                    </label>
+                    <label class="btn btn-default @((Model.status != null && !Model.status.Value)?"active":"")">
+                        <input type="radio" name="status"  value="False" 
+				@((Model.status != null && !Model.status.Value)?"checked":"")>
+			否
+                    </label>
+                </div>
+            </div>
+			</td>
+		</tr>
+                    <tr>
+                        <td align="center" colspan="2">
+                            <input id="txt_id" name="id" value="@Model.id" type="hidden" />
+                            <input id="op_id" name="op_id" value="@Model.id" type="hidden" />
+                            <input id="op_action" name="op_action" value="edit" type="hidden" />
+
+                            <button type="submit" class="btn btn-primary"><i class="gi gi-ok"></i> 提交</button>
+                            <a class="btn btn-danger" onclick="abandon()"><i class="gi gi-remove"></i> 放弃</a>
+                        </td>
+                    </tr>
+                </table>
+</div><!-- /.box-body -->
+
+            <div class="overlay hidden" id="loading_ani">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div><!--Ajax遮罩层-->
+
+        </div><!--box-->
+    </div><!--col-6-->
+
+</div><!--row-->
+</form>

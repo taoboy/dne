@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>任务跟单系统</title>
+    <link rel="stylesheet" type="text/css" href="~/asset/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/asset/css/task.css">
+    <link rel="stylesheet" href="~/asset/css/base.css">
+</head>
+<body>
+    <header>
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="~/asset/img/user.jpg" />
+            </a>
+            <span id="uName">@Session["username"]</span>
+            <span>@Session["dept"]</span>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">更换头像</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">修改个人信息</a></li>
+            </ul>
+            <a role="menuitem" tabindex="-1" href="~/" class="a-quit">注销</a>
+            <span class="h3" style="position: absolute;left: 50%;margin-left: -108px;top:00px;">任务管理系统</span>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row" style="margin-top:55px;">
+            <div class="col-md-2 sidebar">
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="#" onclick="history.go(-1)">任务列表</a></li>
+                    <li class="active"><a href="#">任务历史记录</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="about4">
+        <div class="about4_ch">@ViewBag.title</div>
+        <div class="about4_main">
+
+            <div class="line" ></div>
+            <ul>
+                @foreach (var item in (List<com.gdce_task.Model.T_Task_History>)ViewBag.list)
+                {
+                    <li>
+                        <h4>@item.userName</h4><p class="h-time">@item.descr</p>
+                        <p>@item.createTime.Value.ToString("yyyy-MM-dd hh:mm")</p>
+                        <p>@item.content</p>
+                    </li>
+                }
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="col-md-10 main div-reply">
+        <div class="panel panel-primary Report">
+            <div class="panel-heading text-center">任务汇报</div>
+            <div class="panel-body">
+                <form class="form-horizontal" action="AddReport?uid=@ViewBag.uid" method="post">
+                    <div class="form-group">
+                        <div class="col-sm-4"></div>
+                        <div class="form-group col-sm-3">
+                            <select class="form-control" name="taskTitle">
+                                <option>@ViewBag.title</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-1"></div>
+                        <label class="col-sm-2 control-label">汇报内容</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" rows="3" name="content"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-6">
+                            <button type="submit" class="btn btn-default">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/asset/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="~/asset/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/asset/js/task.js"></script>
+    <script>
+        $(document).ready(function (e) {
+            var h = $(".about4_main ul li:first-child").height() / 2;//<!--第一个li高度的一半-->
+            var h1 = $(".about4_main ul li:last-child").height() / 2;//<!--最后一个li高度的一半-->
+            $(".line").css("top", h - 30);
+            $(".line").height($(".about4_main").height() - h1 - h);
+        });
+        $(function () {
+            //表单提交统一处理
+            $('form').validator().on('submit', function (e) {
+                if (e.isDefaultPrevented()) {
+                    //js表单验证不通过
+                } else {
+                    //防止提交表单数据，改用Ajax提交，地址为form里面定义的路径
+                    e.preventDefault();
+                    $('form').ajaxSubmit({
+                        type: 'post',
+                        success: function (json) {
+                            alert(json.message);
+                            $('.main').find('textarea').val('');
+                        },
+                        error: function () {
+                            alert('出错了，请检查网络');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+           

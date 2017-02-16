@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/MasterPage.cshtml";
+@model List<com.gdce_task.Model.T_Task>
+}
+@section ul{
+    <ul class="nav-stacked">
+        <li><a href="ClientBAdd">发起任务</a></li>
+        <li><a href="ClientBList">任务列表</a></li>
+        <li><a href="ClientBCheck">审核任务</a></li>
+        <li><a href="ClientBAccept">验收任务</a></li>
+        <li><a href="~/Login/UserCenter">个人中心</a></li>
+    </ul>
+}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 main col-sm-12">
+                <div class="panel panel-primary Check">
+                    <div class="panel-heading text-center">审核任务</div>
+                    <div class="panel-body">
+                        <div class="">
+                            <form>
+                                <table class="table table-bordered table-condensed table-responsive" >
+                                    <thead>
+                                        <tr>
+                                            <th>申请人</th>
+                                            <th>标题</th>
+                                            <th>内容</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in (List<com.gdce_task.Model.T_Task>)ViewBag.list)
+                                        {
+                                            <tr>
+                                                <td>@item.userIdEntity.name</td>
+                                                <td>@item.title</td>
+                                                <td style="max-width:500px;word-wrap:break-word;">@item.content</td>
+                                                <td><button class="btn btn-primary" type="button" onclick="adopt(this)" id="@item.id">通过</button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function adopt(list) {
+            var tid = $(list).attr("id");
+            var u = '@Session["username"]';
+            success: $.ajax({
+                type: 'post',
+                url: "adopt?tid=" + tid + "&u=" + u,
+		contentType: "application/x-www-form-urlencoded; charset=utf-8", 
+                success: function () {
+                    alert('任务审核通过');
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('出错了，请检查网络');
+                }
+            })
+        }
+    </script>

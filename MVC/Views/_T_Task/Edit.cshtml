@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model com.gdce_task.Model.T_Task
+    String action = Model.id == null ? "Add" : "Update";
+}
+<form method="post" id="EditForm" action="@action">
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title"><i class="fa fa-edit"></i> 任务信息表 编辑</h3>
+                <a class="pull-right" href="javascript:history.go(-1)"><i class="fa fa-reply"></i> 后退</a>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+
+                <table class="table table-condensed no-border" cellspacing="0" rules="all" id="Content_Body_DetailsView1" style="border-width:0px;border-collapse:collapse;">
+
+
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>发起人</label>
+                                <select id="userId" class="form-control" name="userId" >
+                                    @foreach (var item in Model.userIdEntitys) {                                     
+                                    <option value="@item.id" @(item.id == Model.userId?"selected":"")>
+                                        @item.name
+                                    </option>
+                                    }
+                                </select>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>任务标题</label>
+                                <input type="text" class="form-control" name="title" id="title"  value="@Model.title">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>任务内容</label>
+                                <input type="text" class="form-control" name="content" id="content"  value="@Model.content">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>创建时间</label>
+                                <input  type="text" name="createTime" id="createTime" class="form-control datetimepicker" 
+					value="@(Model.createTime==null?"":Model.createTime.Value.ToString("yyyy-MM-dd HH:mm"))">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>开始时间</label>
+                                <input  type="text" name="beginTime" id="beginTime" class="form-control datetimepicker" 
+					value="@(Model.beginTime==null?"":Model.beginTime.Value.ToString("yyyy-MM-dd HH:mm"))">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>结束时间</label>
+                                <input  type="text" name="endTime" id="endTime" class="form-control datetimepicker" 
+					value="@(Model.endTime==null?"":Model.endTime.Value.ToString("yyyy-MM-dd HH:mm"))">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label>状态标识</label>
+                                <select id="statusId" class="form-control" name="statusId" >
+                                    @foreach (var item in Model.statusIdEntitys) {                                     
+                                    <option value="@item.id" @(item.id == Model.statusId?"selected":"")>
+                                        @item.name
+                                    </option>
+                                    }
+                                </select>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="2">
+                            <input id="txt_id" name="id" value="@Model.id" type="hidden" />
+                            <input id="op_id" name="op_id" value="@Model.id" type="hidden" />
+                            <input id="op_action" name="op_action" value="edit" type="hidden" />
+
+                            <button type="submit" class="btn btn-primary"><i class="gi gi-ok"></i> 提交</button>
+                            <a class="btn btn-danger" onclick="abandon()"><i class="gi gi-remove"></i> 放弃</a>
+                        </td>
+                    </tr>
+                </table>
+</div><!-- /.box-body -->
+
+            <div class="overlay hidden" id="loading_ani">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div><!--Ajax遮罩层-->
+
+        </div><!--box-->
+    </div><!--col-6-->
+
+</div><!--row-->
+</form>

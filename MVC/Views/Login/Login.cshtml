@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "广邮院任务系统--登录";
+}
+
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>广邮院任务系统--登录</title>
+      <link rel="stylesheet" href="~/asset/css/bootstrap.min.css">
+      <link rel="stylesheet" href="~/asset/css/login.css" media="screen" type="text/css" />
+      <!---兼容IE8--->
+      <script src="~/Lib/html5shiv.js"></script>
+      <script src="~/Lib/respond.js"></script>
+  </head>
+
+  <body>
+      <div class="login-page">
+      <div class="login-form">
+        <div class="login-content">
+            <h2 class="h-login">任务管理系统</h2>
+          <form method="post" role="form" id="form_login">
+            <div class="form-group">
+              <div class="input-group">
+                  <span class="input-group-addon" id="lbl_username">
+                      <i class="glyphicon glyphicon-user"></i>
+                  </span>
+                <input type="text" class="form-control" name="username" id="username" placeholder="请输入账号..." autocomplete="off" /></div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                  <span class="input-group-addon" id="lbl_password">
+                      <i class="glyphicon glyphicon-lock"></i>
+                  </span>
+                <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码..." autocomplete="off" /></div>
+            </div>
+            <div class="form-group">
+
+              <button type="submit" class="btn btn-primary btn-block btn-login">登录</button>
+            </div>
+          </form>
+        </div>
+      </div>
+          <a id="roleid" name="@Session["roleid"]"></a>
+          <img src="~/asset/img/login.jpg" style="width:100%;height:100%;position:absolute;top:0px;z-index:-200;"/>
+      </div>
+      <script type="text/javascript" src="~/asset/js/jquery-1.9.1.min.js"></script>
+      <script src="~/Lib/wigets/jQuery.md5.js"></script>
+      <!--表单验证-->
+      <script src="~/Lib/bootstrap-validator/dist/validator.js"></script>
+      <!--表单Ajax提交-->
+      <script src="~/Lib/wigets/jquery.form.js"></script>
+      <script src="~/Lib/wigets/jQuery.md5.js"></script>
+      <script>
+    $(function () {
+        $('form').find('.btn-login').on('click', function (e) {
+            e.preventDefault();
+            var account = $('#username').val();
+            var password = $('#password').val();
+            password = $.md5(password);
+            password = $.md5(password.split("").reverse().join(""));
+            //var crypto = $.md5(pass);
+            //客户端先MD5,反向一次,再MD5,确保传输过程中就算被截取也无法获取原文,系统发布时应将该行混淆处理
+            //crypto = $.md5(crypto.split("").reverse().join(""));
+            //$("#hid_pass").val(crypto);
+            //localStorage.setItem("upass", pass);
+            //return crypto;
+
+
+            if (account == '') {
+                alert("请填写用户名");
+                $('#username').focus();
+            } else if (password == '') {
+                alert("请填写密码");
+                $('#password').focus();
+            } else {
+                $.ajax({
+                    url: '@Href("~/Login/LoginCheck")',
+                    type: 'post',
+                    data: {
+                        account: account,
+                        password: password
+                    },
+                    success: function (json) {
+                        //   console.log(json.data.roleid);
+                        if (json.success) {
+                            //localStorage.setItem("uid", json.data[1]);
+                            //localStorage.setItem("name", json.data[2]);
+                            //localStorage.setItem("roleid", json.data[3]);
+                            //localStorage.setItem("role", json.data[4]);
+                            localStorage.setItem("account", account);
+                            localStorage.setItem("password", password);
+                            //var host = window.location.host + "/" + json.data[0];
+                            var i = Math.floor(Math.random() * 10 + 1);
+                            var username = '@Session["username"]';
+                            var dept = '@Session["dept"]';
+                            var roleid = json.data.roleId;
+                            //alert(roleid);
+                                switch (roleid) {
+                                    case 1:
+                                        window.location.href = '@Href("~/ClientA/ClientAAdd")';
+                                        break;
+                                    case 2:
+                                        window.location.href = '@Href("~/ClientB/ClientBAdd")';
+                                        break;
+                                    case 3:
+                                        window.location.href = '@Href("~/WorkerA/List")';
+                                        break;
+                                    case 4:
+                                        window.location.href = '@Href("~/WorkerB/Distribute")';
+                                        break;
+                                    default:;
+                                }
+                        } else {
+                            alert(json.message);
+                        }
+                    },
+                    error: function () {
+                        alert('出错了，请检查网络');
+                    }
+
+                });
+
+
+            }
+        });
+    });
+      </script>
+    </body>
+    
+</html>

@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/MasterPage.cshtml";
+    @model List<com.gdce_task.Model.T_Task>
+}
+@section ul{
+    <ul class="nav-stacked">
+        <li><a href="ClientBAdd">发起任务</a></li>
+        <li><a href="ClientBList">任务列表</a></li>
+        <li><a href="ClientBCheck">审核任务</a></li>
+        <li><a href="ClientBAccept">验收任务</a></li>
+        <li><a href="~/Login/UserCenter">个人中心</a></li>
+    </ul>
+}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 main">
+                <div class="panel panel-primary check-task">
+                    <div class="panel-heading text-center">验收</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>任务负责人</th>
+                                        <th>标题</th>
+                                        <th>内容</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in (List<com.gdce_task.Model.T_Task>)ViewBag.list)
+                                    {
+                                        <tr>
+                                            <td>@item.userIdEntity.name</td>
+                                            <td>@item.title</td>
+                                            <td>@item.content</td>
+                                            <td>@item.statusIdEntity.descr</td>
+                                            <td>
+                                                <button class="btn btn-primary" type="button" onclick="finish(this)" id=@item.id>通过验收</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function finish(list) {
+            var tid = $(list).attr("id");
+            var u = '@Session["username"]';
+            $.ajax({
+                type: "post",
+                url: "finish?tid=" + tid + "&u=" + u,
+                success: function () {
+                    alert('任务验收通过');
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('出错了，请检查网络');
+                },
+            });
+        }
+    </script>
